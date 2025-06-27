@@ -1,0 +1,46 @@
+{
+    "manifest_version": 3,
+    "name": "StreamProbe - Video Performance Monitor",
+    "version": "1.0.0",
+    "description": "Real-time video streaming performance monitor with buffer analysis, network simulation, and speed indicators (Fast/Good/Okay/Slow)",
+    "author": "StreamProbe Team",
+    "homepage_url": "https://github.com/streamprobe/extension",
+    "action": {
+        "default_popup": "popup/index.html",
+        "default_icon": {
+            "16": "icons/icon16.png",
+            "48": "icons/icon48.png",
+            "128": "icons/icon128.png"
+        }
+    },
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "tabs",
+        "webNavigation",
+        "debugger"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "host_permissions": [
+        "<all_urls>",
+        "file://*",
+        "*://*.youtube.com/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "SampleVideo_1280x720_1mb.mp4"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
+}

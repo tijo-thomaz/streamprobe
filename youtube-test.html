@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube StreamProbe Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .instructions {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #007bff;
+        }
+        .test-links {
+            margin: 20px 0;
+        }
+        .test-links a {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 5px;
+        }
+        .test-links a:hover {
+            background: #0056b3;
+        }
+        .note {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 StreamProbe YouTube Testing</h1>
+        
+        <div class="instructions">
+            <h3>Testing Instructions:</h3>
+            <ol>
+                <li>Load the StreamProbe extension in Chrome</li>
+                <li>Click one of the YouTube test links below</li>
+                <li>Play the video on YouTube</li>
+                <li>Click the StreamProbe extension icon</li>
+                <li>Click "Start Monitoring" in the popup</li>
+                <li>Observe speed indicators (Fast/Good/Okay/Slow)</li>
+                <li>Test different network conditions (3G/4G/5G)</li>
+                <li>Check buffer health and latency status</li>
+            </ol>
+        </div>
+
+        <div class="note">
+            <strong>⚠️ Important:</strong> YouTube detection may take a few seconds as the extension waits for the video player to fully load. You may see "No video detected" initially - this is normal!
+        </div>
+
+        <h3>Test YouTube Videos:</h3>
+        <div class="test-links">
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">
+                🎵 Music Video (Short)
+            </a>
+            <a href="https://www.youtube.com/watch?v=M7lc1UVf-VE" target="_blank">
+                🎥 Demo Video (Long)
+            </a>
+            <a href="https://www.youtube.com/watch?v=jNQXAC9IVRw" target="_blank">
+                🔬 Tech Talk
+            </a>
+            <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" target="_blank">
+                📺 HD Content
+            </a>
+        </div>
+
+        <h3>What to Look For:</h3>
+        <div style="margin: 20px 0;">
+            <h4>Speed Indicators:</h4>
+            <ul>
+                <li><span style="color: #00e676;">🟢 FAST</span> - Buffer ahead ≥10s (Excellent)</li>
+                <li><span style="color: #4caf50;">🟢 GOOD</span> - Buffer ahead 5-10s (Good)</li>
+                <li><span style="color: #ff9800;">🟡 OKAY</span> - Buffer ahead 2-5s (Fair)</li>
+                <li><span style="color: #f44336;">🔴 SLOW</span> - Buffer ahead &lt;2s (Poor)</li>
+            </ul>
+            
+            <h4>Latency Status:</h4>
+            <ul>
+                <li>🚀 Excellent (&lt;50ms)</li>
+                <li>✅ Good (50-100ms)</li>
+                <li>⚠️ Fair (100-200ms)</li>
+                <li>🐌 Poor (&gt;200ms)</li>
+            </ul>
+        </div>
+
+        <div class="note">
+            <strong>💡 Tip:</strong> If the extension doesn't detect the video immediately, try refreshing the YouTube page and starting monitoring again. YouTube's dynamic loading can sometimes delay video element detection.
+        </div>
+
+        <h3>Troubleshooting:</h3>
+        <ul>
+            <li><strong>"No video detected"</strong> - Wait a few seconds, YouTube is still loading</li>
+            <li><strong>Extension not working</strong> - Check console logs (F12) for error messages</li>
+            <li><strong>Speed always shows "Slow"</strong> - Video might be paused or buffering</li>
+            <li><strong>Network throttling not working</strong> - Ensure debugger permission is granted</li>
+        </ul>
+    </div>
+</body>
+</html>

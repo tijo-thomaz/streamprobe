@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>StreamProbe Test Video</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .video-container {
+            width: 100%;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        video {
+            width: 100%;
+            display: block;
+        }
+        .controls {
+            padding: 10px;
+            background: #333;
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            background: #666;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>StreamProbe Test Video</h1>
+        <div class="video-container">
+            <video id="testVideo" controls>
+                <source src="SampleVideo_1280x720_1mb.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="controls">
+                <button onclick="document.getElementById('testVideo').play()">Play</button>
+                <button onclick="document.getElementById('testVideo').pause()">Pause</button>
+                <button onclick="changeQuality('high')">High Quality</button>
+                <button onclick="changeQuality('low')">Low Quality</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function changeQuality(quality) {
+            const video = document.getElementById('testVideo');
+            const currentTime = video.currentTime;
+            const wasPlaying = !video.paused;
+            
+            // Simulate quality change by updating source
+            video.src = quality === 'high' 
+                ? 'SampleVideo_1280x720_1mb.mp4'
+                : 'SampleVideo_640x360_1mb.mp4';
+            
+            video.currentTime = currentTime;
+            if (wasPlaying) {
+                video.play();
+            }
+        }
+    </script>
+</body>
+</html> 

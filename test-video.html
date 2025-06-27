@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamProbe Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .video-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        video {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .controls {
+            margin-top: 20px;
+            text-align: center;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .instructions {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #007bff;
+        }
+        .video-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        .video-info h3 {
+            margin-top: 0;
+            color: #495057;
+        }
+        .info-item {
+            margin: 10px 0;
+            padding: 8px;
+            background: white;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 StreamProbe Extension Test Page</h1>
+        
+        <div class="instructions">
+            <h3>How to test:</h3>
+            <ol>
+                <li>Load the StreamProbe extension in Chrome</li>
+                <li>Click the extension icon in the toolbar</li>
+                <li>Play the video below</li>
+                <li>Click "Start Monitoring" in the extension popup</li>
+                <li>Test different network conditions (3G, 4G, 5G)</li>
+                <li>Watch the buffer metrics and download performance data</li>
+            </ol>
+        </div>
+
+        <div class="video-container">
+            <h2>Sample Video (1280x720, 1MB)</h2>
+            <video id="testVideo" controls width="800">
+                <source src="SampleVideo_1280x720_1mb.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div class="controls">
+            <button onclick="playVideo()">▶️ Play Video</button>
+            <button onclick="pauseVideo()">⏸️ Pause Video</button>
+            <button onclick="restartVideo()">🔄 Restart Video</button>
+            <button onclick="toggleMute()">🔇 Toggle Mute</button>
+            <button onclick="simulateSlowNetwork()">🐌 Simulate Slow Network</button>
+            <button onclick="seekToEnd()">⏭️ Seek Near End</button>
+        </div>
+
+        <div class="video-info">
+            <h3>Video Information</h3>
+            <div class="info-item">
+                <strong>Current Time:</strong> <span id="currentTime">0:00</span>
+            </div>
+            <div class="info-item">
+                <strong>Duration:</strong> <span id="duration">Loading...</span>
+            </div>
+            <div class="info-item">
+                <strong>Buffer Ranges:</strong> <span id="bufferRanges">None</span>
+            </div>
+            <div class="info-item">
+                <strong>Playback Rate:</strong> <span id="playbackRate">1x</span>
+            </div>
+            <div class="info-item">
+                <strong>Video Dimensions:</strong> <span id="dimensions">Loading...</span>
+            </div>
+            <div class="info-item">
+                <strong>Network State:</strong> <span id="networkState">Loading...</span>
+            </div>
+            <div class="info-item">
+                <strong>Ready State:</strong> <span id="readyState">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('testVideo');
+        
+        function playVideo() {
+            video.play().catch(e => console.log('Play failed:', e));
+        }
+        
+        function pauseVideo() {
+            video.pause();
+        }
+        
+        function restartVideo() {
+            video.currentTime = 0;
+            video.play().catch(e => console.log('Play failed:', e));
+        }
+        
+        function toggleMute() {
+            video.muted = !video.muted;
+        }
+        
+        function simulateSlowNetwork() {
+            // Force video to rebuffer by seeking to unbuffered position
+            if (video.duration) {
+                const seekTime = Math.min(video.currentTime + 10, video.duration - 5);
+                video.currentTime = seekTime;
+                console.log('Simulating slow network by seeking to:', seekTime);
+            }
+        }
+        
+        function seekToEnd() {
+            if (video.duration) {
+                video.currentTime = video.duration - 10;
+                console.log('Seeking near end to test buffer behavior');
+            }
+        }
+        
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        function updateVideoInfo() {
+            document.getElementById('currentTime').textContent = formatTime(video.currentTime);
+            document.getElementById('duration').textContent = video.duration ? formatTime(video.duration) : 'Unknown';
+            document.getElementById('playbackRate').textContent = `${video.playbackRate}x`;
+            
+            // Buffer ranges
+            const buffered = video.buffered;
+            let bufferText = 'None';
+            if (buffered.length > 0) {
+                const ranges = [];
+                for (let i = 0; i < buffered.length; i++) {
+                    ranges.push(`${formatTime(buffered.start(i))}-${formatTime(buffered.end(i))}`);
+                }
+                bufferText = ranges.join(', ');
+            }
+            document.getElementById('bufferRanges').textContent = bufferText;
+            
+            // Network and ready states
+            const networkStates = ['EMPTY', 'IDLE', 'LOADING', 'NO_SOURCE'];
+            const readyStates = ['HAVE_NOTHING', 'HAVE_METADATA', 'HAVE_CURRENT_DATA', 'HAVE_FUTURE_DATA', 'HAVE_ENOUGH_DATA'];
+            
+            document.getElementById('networkState').textContent = networkStates[video.networkState] || 'Unknown';
+            document.getElementById('readyState').textContent = readyStates[video.readyState] || 'Unknown';
+        }
+        
+        // Update video dimensions when metadata is loaded
+        video.addEventListener('loadedmetadata', () => {
+            document.getElementById('dimensions').textContent = `${video.videoWidth}x${video.videoHeight}`;
+            updateVideoInfo();
+        });
+        
+        // Update info regularly
+        video.addEventListener('timeupdate', updateVideoInfo);
+        video.addEventListener('progress', updateVideoInfo);
+        video.addEventListener('waiting', () => {
+            console.log('Video is buffering...');
+            updateVideoInfo();
+        });
+        video.addEventListener('playing', () => {
+            console.log('Video started playing');
+            updateVideoInfo();
+        });
+        
+        // Initial update
+        updateVideoInfo();
+        
+        // Log events for debugging
+        ['loadstart', 'loadeddata', 'canplay', 'canplaythrough', 'playing', 'waiting', 'seeking', 'seeked', 'ended', 'error', 'stalled', 'suspend'].forEach(event => {
+            video.addEventListener(event, () => {
+                console.log(`Video event: ${event}`);
+            });
+        });
+    </script>
+</body>
+</html>
