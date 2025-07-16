@@ -190,13 +190,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Issues**: [GitHub Issues](https://github.com/[your-username]/streamprobe/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/[your-username]/streamprobe/discussions)
-- **Email**: [your-email@domain.com]
 
 ---
 
 <div align="center">
 
-**Made with ❤️ for the web development community**
 
 [Report Bug](https://github.com/[your-username]/streamprobe/issues) · [Request Feature](https://github.com/[your-username]/streamprobe/issues) · [View Demo](https://github.com/[your-username]/streamprobe#usage)
 
